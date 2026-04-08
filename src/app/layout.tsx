@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "오장 - 골프 내기 정산",
+  title: "미니오장 - 골프 내기 정산",
   description: "골프 라운드 내기를 쉽고 빠르게 정산하세요",
 };
 
@@ -23,7 +23,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#2d8a4e",
+  themeColor: "#4338ca",
 };
 
 export default function RootLayout({

@@ -7,6 +7,7 @@ import {
   calculateBalances,
   getMultiplier,
   detectBaepan,
+  detectDoubleBaepan,
   formatWon,
   getOecdMembers,
 } from "@/lib/game-logic";
@@ -128,6 +129,13 @@ function HoleEditor({ game }: { game: GameState }) {
     return scores.length >= 2 && detectBaepan(scores, par);
   }, [playerScores, par]);
 
+  // 현재 홀 더블배판 여부
+  const currentHoleDoubleBaepan = useMemo(() => {
+    if (!game.useDoubleBaepan) return false;
+    const scores = Object.values(playerScores).map((s) => s.score);
+    return scores.length >= 2 && detectDoubleBaepan(scores, par);
+  }, [game.useDoubleBaepan, playerScores, par]);
+
   // 스코어 업데이트
   const updateScore = useCallback(
     (
@@ -203,7 +211,7 @@ function HoleEditor({ game }: { game: GameState }) {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 헤더 */}
-      <div className="sticky top-0 z-20 bg-gradient-to-br from-primary to-emerald-light text-primary-foreground">
+      <div className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light text-primary-foreground">
         <div className="px-4 pt-4 pb-3">
           <div className="flex items-center justify-between mb-3">
             <button
@@ -264,9 +272,14 @@ function HoleEditor({ game }: { game: GameState }) {
               {currentHoleBaepan && (
                 <Badge
                   variant="secondary"
-                  className="bg-orange-400/90 text-orange-900 text-[10px]"
+                  className={cn(
+                    "text-[10px]",
+                    currentHoleDoubleBaepan
+                      ? "bg-red-400/90 text-red-900"
+                      : "bg-orange-400/90 text-orange-900"
+                  )}
                 >
-                  다음홀 배판
+                  {currentHoleDoubleBaepan ? "다음홀 더블배판 x4" : "다음홀 배판"}
                 </Badge>
               )}
             </div>

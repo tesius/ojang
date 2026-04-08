@@ -19,6 +19,7 @@ export default function NewGamePage() {
   const [names, setNames] = useState(["", "", "", ""]);
   const [betAmount, setBetAmount] = useState(5000);
   const [useBaepan, setUseBaepan] = useState(true);
+  const [useDoubleBaepan, setUseDoubleBaepan] = useState(false);
   const [useOecd, setUseOecd] = useState(false);
   const [oecdThreshold, setOecdThreshold] = useState(60000);
   const [oecdPenalty, setOecdPenalty] = useState(10000);
@@ -33,6 +34,7 @@ export default function NewGamePage() {
       players: playerNames,
       betAmount,
       useBaepan,
+      useDoubleBaepan: useBaepan && useDoubleBaepan,
       useOecd,
       oecdThreshold,
       oecdPenalty,
@@ -61,7 +63,7 @@ export default function NewGamePage() {
   return (
     <div className="flex-1 flex flex-col">
       {/* 헤더 */}
-      <div className="bg-gradient-to-br from-primary to-emerald-light px-6 pt-10 pb-6 text-primary-foreground">
+      <div className="bg-gradient-to-br from-primary to-brand-light px-6 pt-10 pb-6 text-primary-foreground">
         <button
           onClick={() => router.back()}
           className="mb-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
@@ -141,7 +143,7 @@ export default function NewGamePage() {
           <CardContent className="p-5 space-y-3">
             <Label className="text-base font-semibold">타당 금액</Label>
             <div className="flex gap-2">
-              {[500, 1000, 3000, 5000, 10000].map((amt) => (
+              {[500, 1000, 3000, 5000].map((amt) => (
                 <button
                   key={amt}
                   onClick={() => setBetAmount(amt)}
@@ -191,6 +193,29 @@ export default function NewGamePage() {
               </div>
               <Switch checked={useBaepan} onCheckedChange={setUseBaepan} />
             </div>
+
+            {/* 더블배판 */}
+            {useBaepan && (
+              <motion.div
+                className="flex items-center justify-between pl-4 border-l-2 border-primary/20"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+              >
+                <div>
+                  <p className="font-medium">더블배판</p>
+                  <p className="text-xs text-muted-foreground">
+                    버디 + 트리플보기 이상 동시 발생 시 x4
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    누적 상한 x4
+                  </p>
+                </div>
+                <Switch
+                  checked={useDoubleBaepan}
+                  onCheckedChange={setUseDoubleBaepan}
+                />
+              </motion.div>
+            )}
 
             {/* OECD */}
             <div className="space-y-3">

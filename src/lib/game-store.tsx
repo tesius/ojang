@@ -22,6 +22,7 @@ interface GameStore {
     players: string[];
     betAmount: number;
     useBaepan: boolean;
+    useDoubleBaepan: boolean;
     useOecd: boolean;
     oecdThreshold: number;
     oecdPenalty: number;
@@ -70,6 +71,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       players: string[];
       betAmount: number;
       useBaepan: boolean;
+      useDoubleBaepan: boolean;
       useOecd: boolean;
       oecdThreshold: number;
       oecdPenalty: number;
@@ -82,6 +84,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         players: config.players.map((name) => ({ name, joinedAtHole: 1 })),
         betAmount: config.betAmount,
         useBaepan: config.useBaepan,
+        useDoubleBaepan: config.useDoubleBaepan,
         useOecd: config.useOecd,
         oecdThreshold: config.oecdThreshold,
         oecdPenalty: config.oecdPenalty,

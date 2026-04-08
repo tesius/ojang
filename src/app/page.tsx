@@ -22,9 +22,8 @@ export default function HomePage() {
   return (
     <div className="flex-1 flex flex-col">
       {/* 헤더 */}
-      <div className="bg-gradient-to-br from-primary to-emerald-light px-6 pt-12 pb-8 text-primary-foreground">
-        <h1 className="text-3xl font-bold tracking-tight">오장</h1>
-        <p className="text-primary-foreground/80 mt-1">골프 내기 정산</p>
+      <div className="bg-gradient-to-br from-primary to-brand-light px-6 pt-12 pb-8 text-primary-foreground">
+        <h1 className="text-3xl font-bold tracking-tight">미니오장</h1>
       </div>
 
       <div className="flex-1 px-4 py-6 space-y-6 -mt-4">

@@ -12,6 +12,13 @@ export function detectBaepan(scores: number[], par: number): boolean {
   return false;
 }
 
+/** 더블배판 조건 감지: 버디 이하 + 트리플보기 이상 동시 발생 */
+export function detectDoubleBaepan(scores: number[], par: number): boolean {
+  const hasBirdie = scores.some((s) => s <= par - 1);
+  const hasTripleBogey = scores.some((s) => s >= par + 3);
+  return hasBirdie && hasTripleBogey;
+}
+
 /** 현재 홀의 배판 배율 (연속 배판 누적) */
 export function getMultiplier(game: GameState, holeNumber: number): number {
   if (!game.useBaepan) return 1;
@@ -28,7 +35,16 @@ export function getMultiplier(game: GameState, holeNumber: number): number {
     if (activeScores.length < 2) break;
 
     if (detectBaepan(activeScores, hole.par)) {
-      multiplier *= 2;
+      if (game.useDoubleBaepan && detectDoubleBaepan(activeScores, hole.par)) {
+        multiplier *= 4;
+      } else {
+        multiplier *= 2;
+      }
+      // 더블배판 누적 상한: x4
+      if (game.useDoubleBaepan && multiplier >= 4) {
+        multiplier = 4;
+        break;
+      }
     } else {
       break;
     }

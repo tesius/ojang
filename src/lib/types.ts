@@ -24,6 +24,7 @@ export interface GameState {
   players: Player[];
   betAmount: number;
   useBaepan: boolean;
+  useDoubleBaepan: boolean;
   useOecd: boolean;
   oecdThreshold: number;
   oecdPenalty: number;
