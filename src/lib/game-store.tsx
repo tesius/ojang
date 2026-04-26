@@ -19,10 +19,11 @@ interface GameStore {
   history: GameState[];
   loaded: boolean;
   createGame: (config: {
-    players: string[];
+    players: { name: string; handicap: number }[];
     betAmount: number;
     useBaepan: boolean;
     useDoubleBaepan: boolean;
+    baepanTieAll: boolean;
     useOecd: boolean;
     oecdThreshold: number;
     oecdPenalty: number;
@@ -68,10 +69,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const createGame = useCallback(
     (config: {
-      players: string[];
+      players: { name: string; handicap: number }[];
       betAmount: number;
       useBaepan: boolean;
       useDoubleBaepan: boolean;
+      baepanTieAll: boolean;
       useOecd: boolean;
       oecdThreshold: number;
       oecdPenalty: number;
@@ -81,10 +83,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const newGame: GameState = {
         id,
         status: "active",
-        players: config.players.map((name) => ({ name, joinedAtHole: 1 })),
+        players: config.players.map((p) => ({ name: p.name, handicap: p.handicap, joinedAtHole: 1 })),
         betAmount: config.betAmount,
         useBaepan: config.useBaepan,
         useDoubleBaepan: config.useDoubleBaepan,
+        baepanTieAll: config.baepanTieAll,
         useOecd: config.useOecd,
         oecdThreshold: config.oecdThreshold,
         oecdPenalty: config.oecdPenalty,
@@ -122,7 +125,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         ...prev,
         players: [
           ...prev.players,
-          { name, joinedAtHole: prev.currentHole },
+          { name, handicap: 0, joinedAtHole: prev.currentHole },
         ],
       };
     });

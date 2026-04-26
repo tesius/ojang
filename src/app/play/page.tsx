@@ -126,8 +126,8 @@ function HoleEditor({ game }: { game: GameState }) {
   // 현재 홀 배판 여부 (다음 홀에 영향)
   const currentHoleBaepan = useMemo(() => {
     const scores = Object.values(playerScores).map((s) => s.score);
-    return scores.length >= 2 && detectBaepan(scores, par);
-  }, [playerScores, par]);
+    return scores.length >= 2 && detectBaepan(scores, par, game.baepanTieAll);
+  }, [playerScores, par, game.baepanTieAll]);
 
   // 현재 홀 더블배판 여부
   const currentHoleDoubleBaepan = useMemo(() => {

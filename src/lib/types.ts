@@ -1,5 +1,6 @@
 export interface Player {
   name: string;
+  handicap: number;
   joinedAtHole: number;
 }
 
@@ -25,6 +26,7 @@ export interface GameState {
   betAmount: number;
   useBaepan: boolean;
   useDoubleBaepan: boolean;
+  baepanTieAll: boolean;
   useOecd: boolean;
   oecdThreshold: number;
   oecdPenalty: number;

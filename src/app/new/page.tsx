@@ -17,24 +17,30 @@ export default function NewGamePage() {
 
   const [playerCount, setPlayerCount] = useState(4);
   const [names, setNames] = useState(["", "", "", ""]);
+  const [handicaps, setHandicaps] = useState([0, 0, 0, 0]);
   const [betAmount, setBetAmount] = useState(5000);
   const [useBaepan, setUseBaepan] = useState(true);
   const [useDoubleBaepan, setUseDoubleBaepan] = useState(false);
+  const [baepanTieAll, setBaepanTieAll] = useState(false);
   const [useOecd, setUseOecd] = useState(false);
   const [oecdThreshold, setOecdThreshold] = useState(60000);
   const [oecdPenalty, setOecdPenalty] = useState(10000);
   const [oecdMaxPerHole, setOecdMaxPerHole] = useState(20000);
 
   const handleSubmit = () => {
-    const playerNames = names
+    const players = names
       .slice(0, playerCount)
-      .map((n, i) => n.trim() || `플레이어${i + 1}`);
+      .map((n, i) => ({
+        name: n.trim() || `플레이어${i + 1}`,
+        handicap: handicaps[i],
+      }));
 
     createGame({
-      players: playerNames,
+      players,
       betAmount,
       useBaepan,
       useDoubleBaepan: useBaepan && useDoubleBaepan,
+      baepanTieAll: useBaepan && baepanTieAll,
       useOecd,
       oecdThreshold,
       oecdPenalty,
@@ -114,7 +120,7 @@ export default function NewGamePage() {
           </CardContent>
         </Card>
 
-        {/* 플레이어 이름 */}
+        {/* 플레이어 이름 + 핸디캡 */}
         <Card>
           <CardContent className="p-5 space-y-3">
             <Label className="text-base font-semibold">플레이어</Label>
@@ -131,8 +137,24 @@ export default function NewGamePage() {
                     next[i] = e.target.value;
                     setNames(next);
                   }}
-                  className="rounded-xl"
+                  className="rounded-xl flex-1"
                 />
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <Input
+                    type="text"
+                    inputMode="numeric"
+                    value={handicaps[i] || ""}
+                    placeholder="0"
+                    onChange={(e) => {
+                      const num = Number(e.target.value.replace(/[^0-9]/g, ""));
+                      const next = [...handicaps];
+                      next[i] = isNaN(num) ? 0 : num;
+                      setHandicaps(next);
+                    }}
+                    className="rounded-xl w-14 text-center [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  />
+                  <span className="text-xs text-muted-foreground">H</span>
+                </div>
               </div>
             ))}
           </CardContent>
@@ -213,6 +235,29 @@ export default function NewGamePage() {
                 <Switch
                   checked={useDoubleBaepan}
                   onCheckedChange={setUseDoubleBaepan}
+                />
+              </motion.div>
+            )}
+
+            {/* 전원 동타 배판 */}
+            {useBaepan && (
+              <motion.div
+                className="flex items-center justify-between pl-4 border-l-2 border-primary/20"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+              >
+                <div>
+                  <p className="font-medium">전원 동타 배판</p>
+                  <p className="text-xs text-muted-foreground">
+                    동타 배판 기준을 전원 동타로 변경
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    OFF: 3명 이상 동타 시 배판
+                  </p>
+                </div>
+                <Switch
+                  checked={baepanTieAll}
+                  onCheckedChange={setBaepanTieAll}
                 />
               </motion.div>
             )}

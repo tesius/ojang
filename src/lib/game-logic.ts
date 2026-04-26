@@ -1,13 +1,14 @@
 import { GameState, Settlement } from "./types";
 
 /** 배판 조건 감지 */
-export function detectBaepan(scores: number[], par: number): boolean {
+export function detectBaepan(scores: number[], par: number, tieAll = false): boolean {
   if (scores.some((s) => s <= par - 1)) return true;
   if (scores.some((s) => s >= par + 3)) return true;
   const freq = new Map<number, number>();
   scores.forEach((s) => freq.set(s, (freq.get(s) || 0) + 1));
+  const threshold = tieAll ? scores.length : 3;
   for (const count of freq.values()) {
-    if (count >= 3) return true;
+    if (count >= threshold) return true;
   }
   return false;
 }
@@ -34,14 +35,14 @@ export function getMultiplier(game: GameState, holeNumber: number): number {
 
     if (activeScores.length < 2) break;
 
-    if (detectBaepan(activeScores, hole.par)) {
+    if (detectBaepan(activeScores, hole.par, game.baepanTieAll)) {
       if (game.useDoubleBaepan && detectDoubleBaepan(activeScores, hole.par)) {
         multiplier *= 4;
       } else {
         multiplier *= 2;
       }
-      // 더블배판 누적 상한: x4
-      if (game.useDoubleBaepan && multiplier >= 4) {
+      // 배판 누적 상한: x4
+      if (multiplier >= 4) {
         multiplier = 4;
         break;
       }
@@ -57,6 +58,17 @@ export function getMultiplier(game: GameState, holeNumber: number): number {
 export function calculateBalances(game: GameState): number[] {
   const n = game.players.length;
   const balances = new Array(n).fill(0);
+
+  // 핸디캡 초기 밸런스: 쌍별 핸디 차이 × 타당 금액 선적용
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const diff =
+        (game.players[j].handicap - game.players[i].handicap) *
+        game.betAmount;
+      balances[i] -= diff;
+      balances[j] += diff;
+    }
+  }
 
   const sortedHoles = [...game.holes].sort(
     (a, b) => a.holeNumber - b.holeNumber

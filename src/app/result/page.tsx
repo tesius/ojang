@@ -287,7 +287,8 @@ function HoleDetailTable({ game }: { game: GameState }) {
               activeScores.length >= 2 &&
               detectBaepan(
                 activeScores.map((s) => s.score),
-                hole.par
+                hole.par,
+                game.baepanTieAll
               );
 
             return (
