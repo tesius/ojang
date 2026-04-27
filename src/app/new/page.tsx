@@ -145,8 +145,8 @@ export default function NewGamePage() {
                   <Input
                     type="text"
                     inputMode="numeric"
-                    value={handicaps[i] || ""}
-                    placeholder="0"
+                    value={String(handicaps[i])}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => {
                       const num = Number(e.target.value.replace(/[^0-9]/g, ""));
                       const next = [...handicaps];
