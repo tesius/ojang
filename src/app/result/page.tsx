@@ -67,7 +67,10 @@ function ResultContent() {
   return (
     <div className="flex-1 flex flex-col">
       {/* 헤더 */}
-      <div className="bg-gradient-to-br from-primary to-brand-light px-6 pt-10 pb-8 text-primary-foreground text-center">
+      <div
+        className="bg-gradient-to-br from-primary to-brand-light px-6 pb-8 text-primary-foreground text-center"
+        style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top, 2.5rem))" }}
+      >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}

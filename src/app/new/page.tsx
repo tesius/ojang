@@ -71,7 +71,10 @@ export default function NewGamePage() {
   return (
     <div className="flex-1 flex flex-col">
       {/* 헤더 */}
-      <div className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light px-6 pt-10 pb-6 text-primary-foreground">
+      <div
+        className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light px-6 pb-6 text-primary-foreground"
+        style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top, 2.5rem))" }}
+      >
         <button
           onClick={() => router.back()}
           className="mb-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
@@ -145,8 +148,18 @@ export default function NewGamePage() {
                   <Input
                     type="text"
                     inputMode="numeric"
-                    value={String(handicaps[i])}
-                    onFocus={(e) => e.target.select()}
+                    value={handicaps[i] || ""}
+                    placeholder="0"
+                    onFocus={(e) => {
+                      if (handicaps[i] === 0) e.target.value = "";
+                    }}
+                    onBlur={() => {
+                      if (!handicaps[i]) {
+                        const next = [...handicaps];
+                        next[i] = 0;
+                        setHandicaps(next);
+                      }
+                    }}
                     onChange={(e) => {
                       const num = Number(e.target.value.replace(/[^0-9]/g, ""));
                       const next = [...handicaps];

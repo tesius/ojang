@@ -212,7 +212,7 @@ function HoleEditor({ game }: { game: GameState }) {
     <div className="flex flex-col min-h-screen">
       {/* 헤더 */}
       <div className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light text-primary-foreground">
-        <div className="px-4 pt-4 pb-3">
+        <div className="px-4 pb-3" style={{ paddingTop: "max(1rem, env(safe-area-inset-top, 1rem))" }}>
           <div className="flex items-center justify-between mb-3">
             <button
               onClick={() => {
