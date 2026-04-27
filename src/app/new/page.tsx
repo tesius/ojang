@@ -146,27 +146,17 @@ export default function NewGamePage() {
                 />
                 <div className="flex items-center gap-1 flex-shrink-0">
                   <Input
-                    type="text"
+                    type="number"
                     inputMode="numeric"
-                    value={handicaps[i] || ""}
-                    placeholder="0"
-                    onFocus={(e) => {
-                      if (handicaps[i] === 0) e.target.value = "";
-                    }}
-                    onBlur={() => {
-                      if (!handicaps[i]) {
-                        const next = [...handicaps];
-                        next[i] = 0;
-                        setHandicaps(next);
-                      }
-                    }}
+                    value={handicaps[i]}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => {
-                      const num = Number(e.target.value.replace(/[^0-9]/g, ""));
+                      const num = parseInt(e.target.value, 10);
                       const next = [...handicaps];
-                      next[i] = isNaN(num) ? 0 : num;
+                      next[i] = isNaN(num) ? 0 : Math.max(0, num);
                       setHandicaps(next);
                     }}
-                    className="rounded-xl w-14 text-right pr-2 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                    className="rounded-xl w-14 text-center [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                   <span className="text-xs text-muted-foreground">H</span>
                 </div>
