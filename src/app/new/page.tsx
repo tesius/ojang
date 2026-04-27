@@ -166,7 +166,7 @@ export default function NewGamePage() {
                       next[i] = isNaN(num) ? 0 : num;
                       setHandicaps(next);
                     }}
-                    className="rounded-xl w-14 text-center [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                    className="rounded-xl w-14 text-right pr-2 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                   <span className="text-xs text-muted-foreground">H</span>
                 </div>
