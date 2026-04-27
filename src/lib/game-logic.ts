@@ -59,12 +59,13 @@ export function calculateBalances(game: GameState): number[] {
   const n = game.players.length;
   const balances = new Array(n).fill(0);
 
-  // 핸디캡 초기 밸런스: 쌍별 핸디 차이 × 타당 금액 선적용
+  // 핸디캡 초기 밸런스: 쌍별 핸디 차이 × (플레이홀/18) × 타당 금액 선적용
+  const bet = game.betAmount;
   for (let i = 0; i < n; i++) {
     for (let j = i + 1; j < n; j++) {
-      const diff =
-        (game.players[j].handicap - game.players[i].handicap) *
-        game.betAmount;
+      const hdcpDiff = game.players[j].handicap - game.players[i].handicap;
+      const effectiveStrokes = Math.round(hdcpDiff * game.totalHoles / 18);
+      const diff = effectiveStrokes * bet;
       balances[i] -= diff;
       balances[j] += diff;
     }
@@ -127,9 +128,10 @@ export function calculateBalances(game: GameState): number[] {
 
         const otherPlayers = activePlayerIndices.filter((i) => i !== pi);
         if (otherPlayers.length === 0) continue;
-        const share = penalty / otherPlayers.length;
+        const share = Math.round(penalty / otherPlayers.length / bet) * bet;
+        const totalDistributed = share * otherPlayers.length;
 
-        balances[pi] -= penalty;
+        balances[pi] -= totalDistributed;
         otherPlayers.forEach((i) => {
           balances[i] += share;
         });

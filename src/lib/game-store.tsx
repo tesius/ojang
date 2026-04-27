@@ -21,6 +21,7 @@ interface GameStore {
   createGame: (config: {
     players: { name: string; handicap: number }[];
     betAmount: number;
+    totalHoles: number;
     useBaepan: boolean;
     useDoubleBaepan: boolean;
     baepanTieAll: boolean;
@@ -71,6 +72,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     (config: {
       players: { name: string; handicap: number }[];
       betAmount: number;
+      totalHoles: number;
       useBaepan: boolean;
       useDoubleBaepan: boolean;
       baepanTieAll: boolean;
@@ -85,6 +87,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         status: "active",
         players: config.players.map((p) => ({ name: p.name, handicap: p.handicap, joinedAtHole: 1 })),
         betAmount: config.betAmount,
+        totalHoles: config.totalHoles,
         useBaepan: config.useBaepan,
         useDoubleBaepan: config.useDoubleBaepan,
         baepanTieAll: config.baepanTieAll,

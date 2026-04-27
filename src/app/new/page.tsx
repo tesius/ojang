@@ -19,6 +19,7 @@ export default function NewGamePage() {
   const [names, setNames] = useState(["", "", "", ""]);
   const [handicaps, setHandicaps] = useState([0, 0, 0, 0]);
   const [betAmount, setBetAmount] = useState(5000);
+  const [totalHoles, setTotalHoles] = useState(18);
   const [useBaepan, setUseBaepan] = useState(true);
   const [useDoubleBaepan, setUseDoubleBaepan] = useState(false);
   const [baepanTieAll, setBaepanTieAll] = useState(false);
@@ -38,6 +39,7 @@ export default function NewGamePage() {
     createGame({
       players,
       betAmount,
+      totalHoles,
       useBaepan,
       useDoubleBaepan: useBaepan && useDoubleBaepan,
       baepanTieAll: useBaepan && baepanTieAll,
@@ -69,7 +71,7 @@ export default function NewGamePage() {
   return (
     <div className="flex-1 flex flex-col">
       {/* 헤더 */}
-      <div className="bg-gradient-to-br from-primary to-brand-light px-6 pt-10 pb-6 text-primary-foreground">
+      <div className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light px-6 pt-10 pb-6 text-primary-foreground">
         <button
           onClick={() => router.back()}
           className="mb-3 text-primary-foreground/80 hover:text-primary-foreground transition-colors"
@@ -196,6 +198,29 @@ export default function NewGamePage() {
               <span className="text-sm text-muted-foreground flex-shrink-0">
                 원
               </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 플레이 홀 수 */}
+        <Card>
+          <CardContent className="p-5 space-y-3">
+            <Label className="text-base font-semibold">플레이 홀 수</Label>
+            <div className="flex gap-2">
+              {[9, 18].map((h) => (
+                <button
+                  key={h}
+                  onClick={() => setTotalHoles(h)}
+                  className={cn(
+                    "flex-1 py-3 rounded-xl text-lg font-bold transition-all",
+                    totalHoles === h
+                      ? "bg-primary text-primary-foreground shadow-md"
+                      : "bg-muted text-muted-foreground hover:bg-accent"
+                  )}
+                >
+                  {h}홀
+                </button>
+              ))}
             </div>
           </CardContent>
         </Card>

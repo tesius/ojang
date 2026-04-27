@@ -24,6 +24,7 @@ export interface GameState {
   status: "active" | "completed";
   players: Player[];
   betAmount: number;
+  totalHoles: number;
   useBaepan: boolean;
   useDoubleBaepan: boolean;
   baepanTieAll: boolean;
