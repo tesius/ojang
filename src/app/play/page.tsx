@@ -209,7 +209,7 @@ function HoleEditor({ game }: { game: GameState }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-primary to-brand-light">
       {/* 헤더 */}
       <div className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light text-primary-foreground">
         <div className="px-4 pb-3" style={{ paddingTop: "max(1rem, env(safe-area-inset-top, 1rem))" }}>
@@ -311,7 +311,7 @@ function HoleEditor({ game }: { game: GameState }) {
       </div>
 
       {/* 스코어 입력 */}
-      <main className="flex-1 px-4 py-4 pb-52 space-y-3">
+      <main className="flex-1 px-4 py-4 pb-52 space-y-3 bg-background">
         {activePlayers.map((player, idx) => {
           const score = playerScores[player.index];
           if (!score) return null;

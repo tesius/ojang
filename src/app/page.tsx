@@ -20,13 +20,16 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col bg-gradient-to-br from-primary to-brand-light">
       {/* 헤더 */}
-      <div className="bg-gradient-to-br from-primary to-brand-light px-6 pt-12 pb-8 text-primary-foreground">
+      <div
+        className="bg-gradient-to-br from-primary to-brand-light px-6 pb-8 text-primary-foreground"
+        style={{ paddingTop: "max(3rem, env(safe-area-inset-top, 3rem))" }}
+      >
         <h1 className="text-3xl font-bold tracking-tight">미니오장</h1>
       </div>
 
-      <div className="flex-1 px-4 py-6 space-y-6 -mt-4">
+      <div className="flex-1 px-4 py-6 space-y-6 -mt-4 bg-background rounded-t-2xl">
         {/* 진행중인 게임 */}
         <AnimatePresence>
           {game && (

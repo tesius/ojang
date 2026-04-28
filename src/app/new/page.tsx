@@ -69,7 +69,7 @@ export default function NewGamePage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col bg-gradient-to-br from-primary to-brand-light">
       {/* 헤더 */}
       <div
         className="sticky top-0 z-20 bg-gradient-to-br from-primary to-brand-light px-6 pb-6 text-primary-foreground"
@@ -98,7 +98,7 @@ export default function NewGamePage() {
       </div>
 
       <motion.div
-        className="flex-1 px-4 py-6 -mt-3 space-y-5"
+        className="flex-1 px-4 py-6 -mt-3 space-y-5 bg-background rounded-t-2xl"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >

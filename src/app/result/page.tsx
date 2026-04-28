@@ -65,7 +65,7 @@ function ResultContent() {
   const allZero = balances.every((b) => Math.abs(b) < 1);
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col bg-gradient-to-br from-primary to-brand-light">
       {/* 헤더 */}
       <div
         className="bg-gradient-to-br from-primary to-brand-light px-6 pb-8 text-primary-foreground text-center"
@@ -102,7 +102,7 @@ function ResultContent() {
         </motion.p>
       </div>
 
-      <div className="flex-1 px-4 py-6 -mt-4 space-y-5">
+      <div className="flex-1 px-4 py-6 -mt-4 space-y-5 bg-background rounded-t-2xl">
         {/* 우승자 */}
         {!allZero && (
           <motion.div
